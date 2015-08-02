@@ -17,9 +17,9 @@ namespace ReportIt.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public EUReported()
         {
-            this.ReportedSrcUrls = new HashSet<ReportedSrcUrl>();
             this.ReportedLinkUrls = new HashSet<ReportedLinkUrl>();
             this.ReportedSelectedTexts = new HashSet<ReportedSelectedText>();
+            this.ReportedSrcUrls = new HashSet<ReportedSrcUrl>();
         }
     
         public string PageUrlHash { get; set; }
@@ -30,10 +30,10 @@ namespace ReportIt.Models
         public int Count { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ReportedSrcUrl> ReportedSrcUrls { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ReportedLinkUrl> ReportedLinkUrls { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ReportedSelectedText> ReportedSelectedTexts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ReportedSrcUrl> ReportedSrcUrls { get; set; }
     }
 }

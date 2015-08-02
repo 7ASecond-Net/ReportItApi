@@ -17,6 +17,7 @@ namespace ReportIt.Controllers
     public class ReportsController : ApiController
     {
 
+        [HttpGet] // Or [AcceptVerbs("GET", "POST")]
         public string Get()
         {
             return "You have successfully connected to the ReportIt! Api";

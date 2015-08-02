@@ -27,10 +27,10 @@ namespace ReportIt.Models
     
         public virtual DbSet<EUReported> EUReporteds { get; set; }
         public virtual DbSet<LinkUrl> LinkUrls { get; set; }
+        public virtual DbSet<ReportedLinkUrl> ReportedLinkUrls { get; set; }
+        public virtual DbSet<ReportedSelectedText> ReportedSelectedTexts { get; set; }
         public virtual DbSet<ReportedSrcUrl> ReportedSrcUrls { get; set; }
         public virtual DbSet<SelectionText> SelectionTexts { get; set; }
         public virtual DbSet<SrcUrl> SrcUrls { get; set; }
-        public virtual DbSet<ReportedLinkUrl> ReportedLinkUrls { get; set; }
-        public virtual DbSet<ReportedSelectedText> ReportedSelectedTexts { get; set; }
     }
 }

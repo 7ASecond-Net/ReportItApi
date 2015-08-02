@@ -4,14 +4,14 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="DamoclesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="ReportItModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="EUReported">
           <Key>
             <PropertyRef Name="PageUrlHash" />
           </Key>
           <Property Name="PageUrlHash" Type="nchar" MaxLength="128" Nullable="false" />
           <Property Name="PageUrl" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="CreatedOn" Type="datetime" Nullable="false" StoreGeneratedPattern="None" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
           <Property Name="Processed" Type="bit" Nullable="false" />
           <Property Name="Count" Type="int" Nullable="false" />
@@ -22,7 +22,7 @@
           </Key>
           <Property Name="LinkUrlHash" Type="nchar" MaxLength="128" Nullable="false" />
           <Property Name="LinkUrl" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="CreatedOn" Type="datetime" Nullable="false" StoreGeneratedPattern="None" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
           <Property Name="Processed" Type="bit" Nullable="false" />
           <Property Name="Count" Type="int" Nullable="false" />
@@ -57,7 +57,7 @@
           </Key>
           <Property Name="SelectionText" Type="nvarchar(max)" Nullable="false" />
           <Property Name="SelectionTextHash" Type="nchar" MaxLength="128" Nullable="false" />
-          <Property Name="CreatedOn" Type="datetime" Nullable="false" StoreGeneratedPattern="None" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
           <Property Name="Processed" Type="bit" Nullable="false" />
           <Property Name="Count" Type="int" Nullable="false" />
@@ -68,7 +68,7 @@
           </Key>
           <Property Name="SrcUrlHash" Type="nchar" MaxLength="128" Nullable="false" />
           <Property Name="SrcUrl" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="CreatedOn" Type="datetime" Nullable="false" StoreGeneratedPattern="None" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
           <Property Name="Processed" Type="bit" Nullable="false" />
           <Property Name="Count" Type="int" Nullable="false" />
@@ -145,7 +145,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="DamoclesModelStoreContainer">
+        <EntityContainer Name="ReportItModelStoreContainer">
           <EntitySet Name="EUReported" EntityType="Self.EUReported" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LinkUrl" EntityType="Self.LinkUrl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReportedLinkUrls" EntityType="Self.ReportedLinkUrls" Schema="dbo" store:Type="Tables" />
@@ -178,23 +178,24 @@
             <End Role="ReportedSrcUrls" EntitySet="ReportedSrcUrls" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="DamoclesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="ReportItModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="EUReported">
           <Key>
             <PropertyRef Name="PageUrlHash" />
           </Key>
           <Property Name="PageUrlHash" Type="String" MaxLength="128" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="PageUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Processed" Type="Boolean" Nullable="false" />
           <Property Name="Count" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="ReportedSrcUrls" Relationship="DamoclesModel.FK_ReportedSrcUrls_EUReported" FromRole="EUReported" ToRole="ReportedSrcUrl" />
-          <NavigationProperty Name="ReportedLinkUrls" Relationship="DamoclesModel.FK_ReportedLinkUrls_EUReported" FromRole="EUReported" ToRole="ReportedLinkUrl" />
-          <NavigationProperty Name="ReportedSelectedTexts" Relationship="DamoclesModel.FK_ReportedSelectedText_EUReported" FromRole="EUReported" ToRole="ReportedSelectedText" />
+          <NavigationProperty Name="ReportedLinkUrls" Relationship="Self.FK_ReportedLinkUrls_EUReported" FromRole="EUReported" ToRole="ReportedLinkUrls" />
+          <NavigationProperty Name="ReportedSelectedTexts" Relationship="Self.FK_ReportedSelectedText_EUReported" FromRole="EUReported" ToRole="ReportedSelectedText" />
+          <NavigationProperty Name="ReportedSrcUrls" Relationship="Self.FK_ReportedSrcUrls_EUReported" FromRole="EUReported" ToRole="ReportedSrcUrls" />
         </EntityType>
         <EntityType Name="LinkUrl">
           <Key>
@@ -202,11 +203,31 @@
           </Key>
           <Property Name="LinkUrlHash" Type="String" MaxLength="128" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="LinkUrl1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Processed" Type="Boolean" Nullable="false" />
           <Property Name="Count" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="ReportedLinkUrls" Relationship="DamoclesModel.FK_ReportedLinkUrls_LinkUrl" FromRole="LinkUrl" ToRole="ReportedLinkUrl" />
+          <NavigationProperty Name="ReportedLinkUrls" Relationship="Self.FK_ReportedLinkUrls_LinkUrl" FromRole="LinkUrl" ToRole="ReportedLinkUrls" />
+        </EntityType>
+        <EntityType Name="ReportedLinkUrl">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PageUrlHash" Type="String" MaxLength="128" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="LinkUrlHash" Type="String" MaxLength="128" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="EUReported" Relationship="Self.FK_ReportedLinkUrls_EUReported" FromRole="ReportedLinkUrls" ToRole="EUReported" />
+          <NavigationProperty Name="LinkUrl" Relationship="Self.FK_ReportedLinkUrls_LinkUrl" FromRole="ReportedLinkUrls" ToRole="LinkUrl" />
+        </EntityType>
+        <EntityType Name="ReportedSelectedText">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PageUrlHash" Type="String" MaxLength="128" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="SelectedTextHash" Type="String" MaxLength="128" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="EUReported" Relationship="Self.FK_ReportedSelectedText_EUReported" FromRole="ReportedSelectedText" ToRole="EUReported" />
+          <NavigationProperty Name="SelectionText" Relationship="Self.FK_ReportedSelectedText_SelectionText" FromRole="ReportedSelectedText" ToRole="SelectionText" />
         </EntityType>
         <EntityType Name="ReportedSrcUrl">
           <Key>
@@ -215,8 +236,8 @@
           <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PageUrlHash" Type="String" MaxLength="128" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="SrcUrlHash" Type="String" MaxLength="128" FixedLength="true" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="EUReported" Relationship="DamoclesModel.FK_ReportedSrcUrls_EUReported" FromRole="ReportedSrcUrl" ToRole="EUReported" />
-          <NavigationProperty Name="SrcUrl" Relationship="DamoclesModel.FK_ReportedSrcUrls_SrcUrl" FromRole="ReportedSrcUrl" ToRole="SrcUrl" />
+          <NavigationProperty Name="EUReported" Relationship="Self.FK_ReportedSrcUrls_EUReported" FromRole="ReportedSrcUrls" ToRole="EUReported" />
+          <NavigationProperty Name="SrcUrl" Relationship="Self.FK_ReportedSrcUrls_SrcUrl" FromRole="ReportedSrcUrls" ToRole="SrcUrl" />
         </EntityType>
         <EntityType Name="SelectionText">
           <Key>
@@ -224,11 +245,11 @@
           </Key>
           <Property Name="SelectionText1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="SelectionTextHash" Type="String" MaxLength="128" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Processed" Type="Boolean" Nullable="false" />
           <Property Name="Count" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="ReportedSelectedTexts" Relationship="DamoclesModel.FK_ReportedSelectedText_SelectionText" FromRole="SelectionText" ToRole="ReportedSelectedText" />
+          <NavigationProperty Name="ReportedSelectedTexts" Relationship="Self.FK_ReportedSelectedText_SelectionText" FromRole="SelectionText" ToRole="ReportedSelectedText" />
         </EntityType>
         <EntityType Name="SrcUrl">
           <Key>
@@ -236,116 +257,27 @@
           </Key>
           <Property Name="SrcUrlHash" Type="String" MaxLength="128" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="SrcUrl1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Processed" Type="Boolean" Nullable="false" />
           <Property Name="Count" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="ReportedSrcUrls" Relationship="DamoclesModel.FK_ReportedSrcUrls_SrcUrl" FromRole="SrcUrl" ToRole="ReportedSrcUrl" />
-        </EntityType>
-        <EntityContainer Name="ReportItEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="EUReporteds" EntityType="Self.EUReported" />
-          <EntitySet Name="LinkUrls" EntityType="Self.LinkUrl" />
-          <EntitySet Name="ReportedSrcUrls" EntityType="Self.ReportedSrcUrl" />
-          <EntitySet Name="SelectionTexts" EntityType="Self.SelectionText" />
-          <EntitySet Name="SrcUrls" EntityType="Self.SrcUrl" />
-          <AssociationSet Name="FK_ReportedSrcUrls_EUReported" Association="DamoclesModel.FK_ReportedSrcUrls_EUReported">
-            <End Role="EUReported" EntitySet="EUReporteds" />
-            <End Role="ReportedSrcUrl" EntitySet="ReportedSrcUrls" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ReportedSrcUrls_SrcUrl" Association="DamoclesModel.FK_ReportedSrcUrls_SrcUrl">
-            <End Role="SrcUrl" EntitySet="SrcUrls" />
-            <End Role="ReportedSrcUrl" EntitySet="ReportedSrcUrls" />
-          </AssociationSet>
-          <EntitySet Name="ReportedLinkUrls" EntityType="DamoclesModel.ReportedLinkUrl" />
-          <AssociationSet Name="FK_ReportedLinkUrls_EUReported" Association="DamoclesModel.FK_ReportedLinkUrls_EUReported">
-            <End Role="EUReported" EntitySet="EUReporteds" />
-            <End Role="ReportedLinkUrl" EntitySet="ReportedLinkUrls" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ReportedLinkUrls_LinkUrl" Association="DamoclesModel.FK_ReportedLinkUrls_LinkUrl">
-            <End Role="LinkUrl" EntitySet="LinkUrls" />
-            <End Role="ReportedLinkUrl" EntitySet="ReportedLinkUrls" />
-          </AssociationSet>
-          <EntitySet Name="ReportedSelectedTexts" EntityType="DamoclesModel.ReportedSelectedText" />
-          <AssociationSet Name="FK_ReportedSelectedText_EUReported" Association="DamoclesModel.FK_ReportedSelectedText_EUReported">
-            <End Role="EUReported" EntitySet="EUReporteds" />
-            <End Role="ReportedSelectedText" EntitySet="ReportedSelectedTexts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ReportedSelectedText_SelectionText" Association="DamoclesModel.FK_ReportedSelectedText_SelectionText">
-            <End Role="SelectionText" EntitySet="SelectionTexts" />
-            <End Role="ReportedSelectedText" EntitySet="ReportedSelectedTexts" />
-          </AssociationSet>
-        </EntityContainer>
-        <Association Name="FK_ReportedSrcUrls_EUReported">
-          <End Type="DamoclesModel.EUReported" Role="EUReported" Multiplicity="1" />
-          <End Type="DamoclesModel.ReportedSrcUrl" Role="ReportedSrcUrl" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EUReported">
-              <PropertyRef Name="PageUrlHash" />
-            </Principal>
-            <Dependent Role="ReportedSrcUrl">
-              <PropertyRef Name="PageUrlHash" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ReportedSrcUrls_SrcUrl">
-          <End Type="DamoclesModel.SrcUrl" Role="SrcUrl" Multiplicity="1" />
-          <End Type="DamoclesModel.ReportedSrcUrl" Role="ReportedSrcUrl" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SrcUrl">
-              <PropertyRef Name="SrcUrlHash" />
-            </Principal>
-            <Dependent Role="ReportedSrcUrl">
-              <PropertyRef Name="SrcUrlHash" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="ReportedLinkUrl">
-          <Key>
-            <PropertyRef Name="pid" />
-          </Key>
-          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PageUrlHash" Type="String" Nullable="false" MaxLength="128" FixedLength="true" Unicode="true" />
-          <Property Name="LinkUrlHash" Type="String" Nullable="false" MaxLength="128" FixedLength="true" Unicode="true" />
-          <NavigationProperty Name="EUReported" Relationship="DamoclesModel.FK_ReportedLinkUrls_EUReported" FromRole="ReportedLinkUrl" ToRole="EUReported" />
-          <NavigationProperty Name="LinkUrl" Relationship="DamoclesModel.FK_ReportedLinkUrls_LinkUrl" FromRole="ReportedLinkUrl" ToRole="LinkUrl" />
+          <NavigationProperty Name="ReportedSrcUrls" Relationship="Self.FK_ReportedSrcUrls_SrcUrl" FromRole="SrcUrl" ToRole="ReportedSrcUrls" />
         </EntityType>
         <Association Name="FK_ReportedLinkUrls_EUReported">
-          <End Type="DamoclesModel.EUReported" Role="EUReported" Multiplicity="1" />
-          <End Type="DamoclesModel.ReportedLinkUrl" Role="ReportedLinkUrl" Multiplicity="*" />
+          <End Role="EUReported" Type="Self.EUReported" Multiplicity="1" />
+          <End Role="ReportedLinkUrls" Type="Self.ReportedLinkUrl" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="EUReported">
               <PropertyRef Name="PageUrlHash" />
             </Principal>
-            <Dependent Role="ReportedLinkUrl">
+            <Dependent Role="ReportedLinkUrls">
               <PropertyRef Name="PageUrlHash" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ReportedLinkUrls_LinkUrl">
-          <End Type="DamoclesModel.LinkUrl" Role="LinkUrl" Multiplicity="1" />
-          <End Type="DamoclesModel.ReportedLinkUrl" Role="ReportedLinkUrl" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="LinkUrl">
-              <PropertyRef Name="LinkUrlHash" />
-            </Principal>
-            <Dependent Role="ReportedLinkUrl">
-              <PropertyRef Name="LinkUrlHash" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="ReportedSelectedText">
-          <Key>
-            <PropertyRef Name="pid" />
-          </Key>
-          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PageUrlHash" Type="String" Nullable="false" MaxLength="128" FixedLength="true" Unicode="true" />
-          <Property Name="SelectedTextHash" Type="String" Nullable="false" MaxLength="128" FixedLength="true" Unicode="true" />
-          <NavigationProperty Name="EUReported" Relationship="DamoclesModel.FK_ReportedSelectedText_EUReported" FromRole="ReportedSelectedText" ToRole="EUReported" />
-          <NavigationProperty Name="SelectionText" Relationship="DamoclesModel.FK_ReportedSelectedText_SelectionText" FromRole="ReportedSelectedText" ToRole="SelectionText" />
-        </EntityType>
         <Association Name="FK_ReportedSelectedText_EUReported">
-          <End Type="DamoclesModel.EUReported" Role="EUReported" Multiplicity="1" />
-          <End Type="DamoclesModel.ReportedSelectedText" Role="ReportedSelectedText" Multiplicity="*" />
+          <End Role="EUReported" Type="Self.EUReported" Multiplicity="1" />
+          <End Role="ReportedSelectedText" Type="Self.ReportedSelectedText" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="EUReported">
               <PropertyRef Name="PageUrlHash" />
@@ -355,9 +287,33 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ReportedSrcUrls_EUReported">
+          <End Role="EUReported" Type="Self.EUReported" Multiplicity="1" />
+          <End Role="ReportedSrcUrls" Type="Self.ReportedSrcUrl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EUReported">
+              <PropertyRef Name="PageUrlHash" />
+            </Principal>
+            <Dependent Role="ReportedSrcUrls">
+              <PropertyRef Name="PageUrlHash" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReportedLinkUrls_LinkUrl">
+          <End Role="LinkUrl" Type="Self.LinkUrl" Multiplicity="1" />
+          <End Role="ReportedLinkUrls" Type="Self.ReportedLinkUrl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LinkUrl">
+              <PropertyRef Name="LinkUrlHash" />
+            </Principal>
+            <Dependent Role="ReportedLinkUrls">
+              <PropertyRef Name="LinkUrlHash" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ReportedSelectedText_SelectionText">
-          <End Type="DamoclesModel.SelectionText" Role="SelectionText" Multiplicity="1" />
-          <End Type="DamoclesModel.ReportedSelectedText" Role="ReportedSelectedText" Multiplicity="*" />
+          <End Role="SelectionText" Type="Self.SelectionText" Multiplicity="1" />
+          <End Role="ReportedSelectedText" Type="Self.ReportedSelectedText" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SelectionText">
               <PropertyRef Name="SelectionTextHash" />
@@ -367,14 +323,59 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ReportedSrcUrls_SrcUrl">
+          <End Role="SrcUrl" Type="Self.SrcUrl" Multiplicity="1" />
+          <End Role="ReportedSrcUrls" Type="Self.ReportedSrcUrl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SrcUrl">
+              <PropertyRef Name="SrcUrlHash" />
+            </Principal>
+            <Dependent Role="ReportedSrcUrls">
+              <PropertyRef Name="SrcUrlHash" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ReportItEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="EUReporteds" EntityType="Self.EUReported" />
+          <EntitySet Name="LinkUrls" EntityType="Self.LinkUrl" />
+          <EntitySet Name="ReportedLinkUrls" EntityType="Self.ReportedLinkUrl" />
+          <EntitySet Name="ReportedSelectedTexts" EntityType="Self.ReportedSelectedText" />
+          <EntitySet Name="ReportedSrcUrls" EntityType="Self.ReportedSrcUrl" />
+          <EntitySet Name="SelectionTexts" EntityType="Self.SelectionText" />
+          <EntitySet Name="SrcUrls" EntityType="Self.SrcUrl" />
+          <AssociationSet Name="FK_ReportedLinkUrls_EUReported" Association="Self.FK_ReportedLinkUrls_EUReported">
+            <End Role="EUReported" EntitySet="EUReporteds" />
+            <End Role="ReportedLinkUrls" EntitySet="ReportedLinkUrls" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReportedSelectedText_EUReported" Association="Self.FK_ReportedSelectedText_EUReported">
+            <End Role="EUReported" EntitySet="EUReporteds" />
+            <End Role="ReportedSelectedText" EntitySet="ReportedSelectedTexts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReportedSrcUrls_EUReported" Association="Self.FK_ReportedSrcUrls_EUReported">
+            <End Role="EUReported" EntitySet="EUReporteds" />
+            <End Role="ReportedSrcUrls" EntitySet="ReportedSrcUrls" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReportedLinkUrls_LinkUrl" Association="Self.FK_ReportedLinkUrls_LinkUrl">
+            <End Role="LinkUrl" EntitySet="LinkUrls" />
+            <End Role="ReportedLinkUrls" EntitySet="ReportedLinkUrls" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReportedSelectedText_SelectionText" Association="Self.FK_ReportedSelectedText_SelectionText">
+            <End Role="SelectionText" EntitySet="SelectionTexts" />
+            <End Role="ReportedSelectedText" EntitySet="ReportedSelectedTexts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReportedSrcUrls_SrcUrl" Association="Self.FK_ReportedSrcUrls_SrcUrl">
+            <End Role="SrcUrl" EntitySet="SrcUrls" />
+            <End Role="ReportedSrcUrls" EntitySet="ReportedSrcUrls" />
+          </AssociationSet>
+        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="DamoclesModelStoreContainer" CdmEntityContainer="ReportItEntities">
+        <EntityContainerMapping StorageEntityContainer="ReportItModelStoreContainer" CdmEntityContainer="ReportItEntities">
           <EntitySetMapping Name="EUReporteds">
-            <EntityTypeMapping TypeName="DamoclesModel.EUReported">
+            <EntityTypeMapping TypeName="ReportItModel.EUReported">
               <MappingFragment StoreEntitySet="EUReported">
                 <ScalarProperty Name="PageUrlHash" ColumnName="PageUrlHash" />
                 <ScalarProperty Name="PageUrl" ColumnName="PageUrl" />
@@ -386,7 +387,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="LinkUrls">
-            <EntityTypeMapping TypeName="DamoclesModel.LinkUrl">
+            <EntityTypeMapping TypeName="ReportItModel.LinkUrl">
               <MappingFragment StoreEntitySet="LinkUrl">
                 <ScalarProperty Name="LinkUrlHash" ColumnName="LinkUrlHash" />
                 <ScalarProperty Name="LinkUrl1" ColumnName="LinkUrl" />
@@ -397,8 +398,26 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ReportedLinkUrls">
+            <EntityTypeMapping TypeName="ReportItModel.ReportedLinkUrl">
+              <MappingFragment StoreEntitySet="ReportedLinkUrls">
+                <ScalarProperty Name="pid" ColumnName="pid" />
+                <ScalarProperty Name="PageUrlHash" ColumnName="PageUrlHash" />
+                <ScalarProperty Name="LinkUrlHash" ColumnName="LinkUrlHash" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReportedSelectedTexts">
+            <EntityTypeMapping TypeName="ReportItModel.ReportedSelectedText">
+              <MappingFragment StoreEntitySet="ReportedSelectedText">
+                <ScalarProperty Name="pid" ColumnName="pid" />
+                <ScalarProperty Name="PageUrlHash" ColumnName="PageUrlHash" />
+                <ScalarProperty Name="SelectedTextHash" ColumnName="SelectedTextHash" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="ReportedSrcUrls">
-            <EntityTypeMapping TypeName="DamoclesModel.ReportedSrcUrl">
+            <EntityTypeMapping TypeName="ReportItModel.ReportedSrcUrl">
               <MappingFragment StoreEntitySet="ReportedSrcUrls">
                 <ScalarProperty Name="pid" ColumnName="pid" />
                 <ScalarProperty Name="PageUrlHash" ColumnName="PageUrlHash" />
@@ -407,7 +426,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SelectionTexts">
-            <EntityTypeMapping TypeName="DamoclesModel.SelectionText">
+            <EntityTypeMapping TypeName="ReportItModel.SelectionText">
               <MappingFragment StoreEntitySet="SelectionText">
                 <ScalarProperty Name="SelectionText1" ColumnName="SelectionText" />
                 <ScalarProperty Name="SelectionTextHash" ColumnName="SelectionTextHash" />
@@ -419,7 +438,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SrcUrls">
-            <EntityTypeMapping TypeName="DamoclesModel.SrcUrl">
+            <EntityTypeMapping TypeName="ReportItModel.SrcUrl">
               <MappingFragment StoreEntitySet="SrcUrl">
                 <ScalarProperty Name="SrcUrlHash" ColumnName="SrcUrlHash" />
                 <ScalarProperty Name="SrcUrl1" ColumnName="SrcUrl" />
@@ -427,24 +446,6 @@
                 <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
                 <ScalarProperty Name="Processed" ColumnName="Processed" />
                 <ScalarProperty Name="Count" ColumnName="Count" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ReportedLinkUrls">
-            <EntityTypeMapping TypeName="DamoclesModel.ReportedLinkUrl">
-              <MappingFragment StoreEntitySet="ReportedLinkUrls">
-                <ScalarProperty Name="LinkUrlHash" ColumnName="LinkUrlHash" />
-                <ScalarProperty Name="PageUrlHash" ColumnName="PageUrlHash" />
-                <ScalarProperty Name="pid" ColumnName="pid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ReportedSelectedTexts">
-            <EntityTypeMapping TypeName="DamoclesModel.ReportedSelectedText">
-              <MappingFragment StoreEntitySet="ReportedSelectedText">
-                <ScalarProperty Name="SelectedTextHash" ColumnName="SelectedTextHash" />
-                <ScalarProperty Name="PageUrlHash" ColumnName="PageUrlHash" />
-                <ScalarProperty Name="pid" ColumnName="pid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
