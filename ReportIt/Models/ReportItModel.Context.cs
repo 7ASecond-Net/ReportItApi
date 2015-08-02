@@ -13,10 +13,10 @@ namespace ReportIt.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class DamoclesEntities : DbContext
+    public partial class ReportItEntities : DbContext
     {
-        public DamoclesEntities()
-            : base("name=DamoclesEntities")
+        public ReportItEntities()
+            : base("name=ReportItEntities")
         {
         }
     
@@ -27,7 +27,10 @@ namespace ReportIt.Models
     
         public virtual DbSet<EUReported> EUReporteds { get; set; }
         public virtual DbSet<LinkUrl> LinkUrls { get; set; }
+        public virtual DbSet<ReportedSrcUrl> ReportedSrcUrls { get; set; }
         public virtual DbSet<SelectionText> SelectionTexts { get; set; }
         public virtual DbSet<SrcUrl> SrcUrls { get; set; }
+        public virtual DbSet<ReportedLinkUrl> ReportedLinkUrls { get; set; }
+        public virtual DbSet<ReportedSelectedText> ReportedSelectedTexts { get; set; }
     }
 }

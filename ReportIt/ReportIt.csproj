@@ -171,6 +171,20 @@
     <Compile Include="Models\LinkUrl.cs">
       <DependentUpon>ReportItModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Model1.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Models\ReportedLinkUrl.cs">
+      <DependentUpon>ReportItModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ReportedSelectedText.cs">
+      <DependentUpon>ReportItModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ReportedSrcUrl.cs">
+      <DependentUpon>ReportItModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ReportItModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -201,6 +215,10 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Models\Model1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Model1.cs</LastGenOutput>
+    </Content>
     <Content Include="Models\ReportItModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ReportItModel.edmx</DependentUpon>

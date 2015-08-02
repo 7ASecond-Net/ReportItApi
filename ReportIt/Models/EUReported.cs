@@ -17,23 +17,23 @@ namespace ReportIt.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public EUReported()
         {
-            this.LinkUrls = new HashSet<LinkUrl>();
-            this.SelectionTexts = new HashSet<SelectionText>();
-            this.SrcUrls = new HashSet<SrcUrl>();
+            this.ReportedSrcUrls = new HashSet<ReportedSrcUrl>();
+            this.ReportedLinkUrls = new HashSet<ReportedLinkUrl>();
+            this.ReportedSelectedTexts = new HashSet<ReportedSelectedText>();
         }
     
-        public int Id { get; set; }
         public string PageUrlHash { get; set; }
         public string PageUrl { get; set; }
-        public byte[] CreatedOn { get; set; }
+        public System.DateTime CreatedOn { get; set; }
         public System.DateTime UpdatedOn { get; set; }
         public bool Processed { get; set; }
+        public int Count { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LinkUrl> LinkUrls { get; set; }
+        public virtual ICollection<ReportedSrcUrl> ReportedSrcUrls { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SelectionText> SelectionTexts { get; set; }
+        public virtual ICollection<ReportedLinkUrl> ReportedLinkUrls { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SrcUrl> SrcUrls { get; set; }
+        public virtual ICollection<ReportedSelectedText> ReportedSelectedTexts { get; set; }
     }
 }

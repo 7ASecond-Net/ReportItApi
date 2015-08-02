@@ -14,14 +14,20 @@ namespace ReportIt.Models
     
     public partial class SrcUrl
     {
-        public int pId { get; set; }
-        public int Id { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public SrcUrl()
+        {
+            this.ReportedSrcUrls = new HashSet<ReportedSrcUrl>();
+        }
+    
         public string SrcUrlHash { get; set; }
         public string SrcUrl1 { get; set; }
-        public byte[] CreatedOn { get; set; }
+        public System.DateTime CreatedOn { get; set; }
         public System.DateTime UpdatedOn { get; set; }
         public bool Processed { get; set; }
+        public int Count { get; set; }
     
-        public virtual EUReported EUReported { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ReportedSrcUrl> ReportedSrcUrls { get; set; }
     }
 }

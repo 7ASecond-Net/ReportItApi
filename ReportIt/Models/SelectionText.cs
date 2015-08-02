@@ -14,14 +14,20 @@ namespace ReportIt.Models
     
     public partial class SelectionText
     {
-        public int pId { get; set; }
-        public int Id { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public SelectionText()
+        {
+            this.ReportedSelectedTexts = new HashSet<ReportedSelectedText>();
+        }
+    
         public string SelectionText1 { get; set; }
         public string SelectionTextHash { get; set; }
-        public byte[] CreatedOn { get; set; }
+        public System.DateTime CreatedOn { get; set; }
         public System.DateTime UpdatedOn { get; set; }
         public bool Processed { get; set; }
+        public int Count { get; set; }
     
-        public virtual EUReported EUReported { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ReportedSelectedText> ReportedSelectedTexts { get; set; }
     }
 }
