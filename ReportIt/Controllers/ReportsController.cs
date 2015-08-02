@@ -9,14 +9,16 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace ReportIt.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ReportsController : ApiController
     {
 
         // POST api/Reports
-        public string Post([FromBody]string value)
+        public void Post([FromBody]string value)
         {
             // Parts received separated by ,
             // PageUrl          -- The Url of the page being reported [0]
@@ -77,13 +79,13 @@ namespace ReportIt.Controllers
                     rst = null;
                     rie = null;
 
-                    return "Success";
+                   // return "Success";
                 }
-                return "Nothing received";
+               // return "Nothing received";
             }
             catch (Exception ex)
             {
-                return ex.InnerException.ToString();
+               // return ex.InnerException.ToString();
             }
         }
 
