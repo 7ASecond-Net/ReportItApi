@@ -17,6 +17,11 @@ namespace ReportIt.Controllers
     public class ReportsController : ApiController
     {
 
+        public string Get()
+        {
+            return "You have successfully connected to the ReportIt! Api";
+        }
+
         // POST api/Reports
         public void Post([FromBody]string value)
         {
