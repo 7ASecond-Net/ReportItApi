@@ -16,13 +16,7 @@ namespace ReportIt.Controllers
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ReportsController : ApiController
     {
-
-        [HttpGet] // Or [AcceptVerbs("GET", "POST")]
-        public string Get()
-        {
-            return "You have successfully connected to the ReportIt! Api";
-        }
-
+        [HttpPost]
         // POST api/Reports
         public void Post([FromBody]string value)
         {
@@ -37,17 +31,27 @@ namespace ReportIt.Controllers
                 if (value != null)
                 {
                     // Get the Reported values and Hashes of them
-                    string pageUrl = GetPageUrl(value);
-                    string pageUrlHash = GetSHA512(pageUrl);
-                    string srcUrl = GetSrcUrl(value);
+                    string pu = GetPageUrl(value);
+                    string pageUrlHash = GetSHA512(pu);
+                    string pageUrl = Security.Encrypt(pu, pageUrlHash);
+                    string srcUrl = Security.Encrypt(GetSrcUrl(value), pageUrlHash);
+                    //string pageUrl = pu;
+                    //string srcUrl = GetSrcUrl(value);
+
                     string srcUrlHash = null;
                     if (!string.IsNullOrEmpty(srcUrl)) srcUrlHash = GetSHA512(srcUrl);
-                    string linkUrl = GetLinkUrl(value);
+
+                    string lulu = GetLinkUrl(value);
                     string linkUrlHash = null;
-                    if (!string.IsNullOrEmpty(linkUrl)) linkUrlHash = GetSHA512(linkUrl);
-                    string selectionText = GetSelectionText(value);
+                    if (!string.IsNullOrEmpty(lulu)) linkUrlHash = GetSHA512(lulu);
+                    string linkUrl = Security.Encrypt(lulu, linkUrlHash);
+                    //string linkUrl = lulu;
+
+                    string stst = GetSelectionText(value);                    
                     string selectionTextHash = null;
-                    if (!string.IsNullOrEmpty(selectionText)) selectionTextHash = GetSHA512(selectionText);
+                    if (!string.IsNullOrEmpty(stst)) selectionTextHash = GetSHA512(stst);
+                    string selectionText = Security.Encrypt(stst, selectionTextHash);
+                    //string selectionText = stst;
 
                     ReportItEntities rie = new ReportItEntities();
                     rie.Database.Connection.Open(); // Connect to the Database
@@ -73,25 +77,13 @@ namespace ReportIt.Controllers
                         //Just drop out the bottom -no PageUrl == nothing to process
                     }
 
-                    rie.Database.Connection.Close();
-
-                    //// Tidy up a little
-                    eur = null;
-                    su = null;
-                    rsu = null;
-                    lu = null;
-                    rlu = null;
-                    st = null;
-                    rst = null;
-                    rie = null;
-
-                   // return "Success";
+                    rie.Database.Connection.Close();                    
                 }
-               // return "Nothing received";
+                // return "Nothing received";
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-               // return ex.InnerException.ToString();
+                // return ex.InnerException.ToString();
             }
         }
 
@@ -340,24 +332,32 @@ namespace ReportIt.Controllers
         /// </returns>
         private string GetSelectionText(string value)
         {
-            string[] parts = value.Split(',');
-            string sText = "";
-            int idx = 0;
-
-
-            foreach (string txt in parts)
+            try
             {
-                if (idx > 2)
+                string[] parts = value.Split(',');
+                string sText = "";
+                int idx = 0;
+
+
+                foreach (string txt in parts)
                 {
-                    sText += txt + ", ";
+                    if (idx > 2)
+                    {
+                        sText += txt + ", ";
+                    }
+
+                    idx++;
                 }
 
-                idx++;
+                sText = sText.Substring(0, sText.Length - 2);
+
+                return sText; // Remove the final trailing comma
+            }
+            catch (Exception)
+            {
+                return string.Empty;
             }
 
-            sText = sText.Substring(0, sText.Length - 2);
-
-            return sText; // Remove the final trailing comma
         }
 
 
@@ -372,7 +372,15 @@ namespace ReportIt.Controllers
         /// </returns>
         private string GetLinkUrl(string value)
         {
-            return HttpUtility.UrlDecode(value.Split(',')[2].ToString());
+            try
+            {
+                return HttpUtility.UrlDecode(value.Split(',')[2].ToString());
+            }
+            catch (Exception)
+            {
+                return string.Empty;
+            }
+
         }
 
 
@@ -387,7 +395,15 @@ namespace ReportIt.Controllers
         /// </returns>
         private string GetSrcUrl(string value)
         {
-            return HttpUtility.UrlDecode(value.Split(',')[1].ToString());
+            try
+            {
+                return HttpUtility.UrlDecode(value.Split(',')[1].ToString());
+            }
+            catch (Exception)
+            {
+                return string.Empty;
+            }
+
         }
 
 
@@ -402,7 +418,16 @@ namespace ReportIt.Controllers
         /// </returns>
         private string GetPageUrl(string value)
         {
-            return HttpUtility.UrlDecode(value.Split(',')[0].ToString());
+            try
+            {
+                return HttpUtility.UrlDecode(value.Split(',')[0].ToString());
+            }
+            catch (Exception)
+            {
+
+                return string.Empty;
+            }
+
         }
 
         /// <summary>
@@ -416,16 +441,21 @@ namespace ReportIt.Controllers
         /// </returns>
         public static string GetSHA512(string stringData)
         {
-            UnicodeEncoding UE = new UnicodeEncoding();
-            byte[] message = UE.GetBytes(stringData);
-            SHA512Managed hashString = new SHA512Managed();
-            string hexNumber = "";
-            byte[] hashValue = hashString.ComputeHash(message);
-            foreach (byte x in hashValue)
+            if (!string.IsNullOrEmpty(stringData))
             {
-                hexNumber += String.Format("{0:x2}", x);
+                UnicodeEncoding UE = new UnicodeEncoding();
+                byte[] message = UE.GetBytes(stringData);
+                SHA512Managed hashString = new SHA512Managed();
+                string hexNumber = "";
+                byte[] hashValue = hashString.ComputeHash(message);
+                foreach (byte x in hashValue)
+                {
+                    hexNumber += String.Format("{0:x2}", x);
+                }
+                return hexNumber;
             }
-            return hexNumber;
+
+            return string.Empty;
         }
     }
 }
